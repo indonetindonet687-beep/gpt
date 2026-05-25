@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gemini by B'RIXnL</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif
+}
+
+body{
+background:#131314;
+color:white;
+display:flex;
+height:100vh;
+overflow:hidden
+}
+
+.sidebar{
+width:260px;
+background:#1e1f20;
+padding:20px;
+border-right:1px solid #2a2b2d;
+overflow:auto
+}
+
+.sidebar h1{
+font-size:22px;
+margin-bottom:20px
+}
+
+.sidebar button{
+width:100%;
+padding:14px;
+border:none;
+border-radius:14px;
+background:#303134;
+color:white;
+cursor:pointer;
+margin-bottom:10px;
+text-align:left
+}
+
+.files{
+margin-top:20px
+}
+
+.file{
+font-size:12px;
+padding:8px;
+background:#202124;
+border-radius:10px;
+margin-bottom:8px;
+word-break:break-word
+}
+
+.main{
+flex:1;
+display:flex;
+flex-direction:column
+}
+
+.top{
+padding:30px;
+font-size:48px;
+font-weight:bold;
+background:linear-gradient(90deg,#8ab4f8,#c58af9,#f28b82);
+-webkit-background-clip:text;
+color:transparent
+}
+
+.chat{
+flex:1;
+padding:20px;
+overflow:auto
+}
+
+.msg{
+padding:14px 18px;
+border-radius:18px;
+margin-bottom:14px;
+max-width:75%;
+line-height:1.5;
+white-space:pre-wrap
+}
+
+.ai{
+background:#202124
+}
+
+.user{
+background:#3c4043;
+margin-left:auto
+}
+
+.bottom{
+padding:20px;
+display:flex;
+gap:10px;
+border-top:1px solid #2a2b2d
+}
+
+input{
+flex:1;
+padding:16px;
+border:none;
+border-radius:18px;
+background:#202124;
+color:white
+}
+
+button.send{
+padding:16px 20px;
+border:none;
+border-radius:18px;
+background:#8ab4f8;
+cursor:pointer
+}
+</style>
+</head>
+
+<body>
+
+<div class="sidebar">
+<h1>Gemini</h1>
+
+<button onclick="newChat()">+ New Chat</button>
+
+<div class="files" id="files"></div>
+</div>
+
+<div class="main">
+
+<div class="top">
+Halo, Ridho
+</div>
+
+<div class="chat" id="chat">
+<div class="msg ai">
+Halo 👋 Semua JSON kamu sudah disatuin langsung di HTML ini.
+</div>
+</div>
+
+<div class="bottom">
+<input id="input" placeholder="Cari sesuatu dari JSON..." />
+<button class="send" onclick="send()">Send</button>
+</div>
+
+</div>
+
+<script>
+const DATA = [{"name": "Blakblox(2).json", "content": {"status": true, "creator": "Ridho", "result": {"response": "<think>\nThe user is asking in Indonesian to \"make something\" (buatkan sesuatu). However, this is extremely vague - I need to clarify what they want me to create.\n\nLet me ask for clarification in Indonesian about what they want me to help create.\n</think>af, saya perlu klarifikasi. Apa yang ingin Anda buat? Misalnya:\n\n- 📝 **Tulisan/artikel** - tentang topik tertentu\n- 💻 **Kode program** - untuk bahasa pemrograman tertentu\n- 📧 **Email** - formal atau informal\n- 📄 **Dokumen** - proposal, laporan, dll\n- 🎵 **Lirik lagu** - atau puisi\n- 💬 **Chat/message** - untuk situasi tertentu\n- 📢 **Iklan/script** - untuk marketing\n- Atau sesuatu yang lain?\n\nSilakan beri tahu topik/jenis dan detail lainnya, agar saya bisa membantu dengan lebih tepat! 😊"}}}, {"name": "COPILOT(2).json", "content": {"status": true, "creator": "Ridho", "result": {"success": false, "message": "Available models: default, think-deeper, gpt-5"}}}, {"name": "deep(2).json", "content": {"status": true, "creator": "Ridho", "result": {"response": "Tentu. Berikut penjelasan singkat tentang Teori Relativitas.\n\nTeori Relativitas adalah salah satu pilar utama fisika modern yang dikembangkan oleh **Albert Einstein**. Sebenarnya, ini terdiri dari dua teori:\n\n### 1. Teori Relativitas Khusus (1905)\nTeori ini berurusan dengan benda-benda yang bergerak dengan kecepatan konstan, terutama yang mendekati kecepatan cahaya.\n\n**Dua Postulat Utamanya:**\n1.  **Hukum fisika berlaku sama untuk semua pengamat yang bergerak dalam kerangka acuan inersia (tanpa percepatan).**\n2.  **Kecepatan cahaya dalam ruang hampa adalah sama untuk semua pengamat, tidak tergantung pada gerak sumber cahaya atau pengamat.** (Kecepatan cahaya, dilambangkan **c**, adalah konstanta universal: ~300.000 km/s).\n\n**Konsekuensi Penting:**\n*   **Dilasi Waktu (Time Dilation):** Waktu berjalan lebih lambat untuk objek yang bergerak sangat cepat. Jika Anda bergerak mendekati kecepatan cahaya, waktu bagi Anda akan berjalan lebih lambat dibandingkan dengan orang yang diam.\n*   **Kontraksi Panjang (Length Contraction):** Objek yang bergerak sangat cepat akan memendek (dalam arah geraknya) dari perspektif pengamat yang diam.\n*   **Kesetaraan Massa-Energi:** Inilah rumus paling terkenal dari teori ini: **E = mc²**. Artinya, massa (m) dan energi (E) adalah dua sisi dari koin yang sama dan dapat saling bertukar. Massa mengandung sejumlah energi yang sangat besar (dikalikan dengan kuadrat kecepatan cahaya).\n\n### 2. Teori Relativitas Umum (1915)\nTeori ini memperluas prinsip relativitas untuk mencakup kerangka acuan yang dipercepat (seperti akibat gravitasi) dan pada dasarnya adalah **teori gravitasi baru** yang menggantikan teori gravitasi Newton.\n\n**Ide Utamanya:**\n*   **Ruang dan waktu** tidak terpisah; mereka menyatu dalam sebuah kain yang disebut **ruang-waktu (spacetime)**.\n*   **Gravitasi bukanlah gaya \"misterius\" yang menarik benda**, tetapi merupakan akibat dari **kelengkungan (curvature) ruang-waktu** oleh massa dan energi.\n\n**Analogi yang Berguna:**\nBayangkan ruang-waktu seperti sebuah lembaran karet yang elastis yang direntangkan. Jika Anda meletakkan bola bowling (mewakili massa besar seperti matahari) di tengahnya, lembaran itu akan melengkung. Kemudian, jika Anda menggulingkan sebuah kelereng (mewakili planet) di dekatnya, kelereng itu akan bergerak mengikuti kelengkungan yang dibuat oleh bola bowling. Itulah gravitasi—benda bergerak mengikuti lengkungan ruang-waktu.\n\n**Konsekuensi Penting:**\n*   **Pembelokan Cahaya:** Cahaya akan membelok ketika melewati medan gravitasi yang kuat.\n*   **Dilasi Waktu Gravitasi:** Waktu berjalan lebih lambat di medan gravitasi yang lebih kuat. (Inilah prinsip yang digunakan GPS satelit untuk koreksi waktu yang akurat).\n*   **Gelombang Gravitasi:** Riak dalam ruang-waktu yang dihasilkan oleh peristiwa dahsyat seperti penggabungan dua lubang hitam. (Dipastikan keberadaannya pada tahun 2015).\n\n### Ringkasan Singkat:\n\n| Aspek | Relativitas Khusus | Relativitas Umum |\n| :--- | :--- | :--- |\n| **Fokus** | Gerak dengan kecepatan konstan | Gravitasi & percepatan |\n| **Konsep Kunci** | Kecepatan cahaya konstan, E=mc² | Kelengkungan ruang-waktu |\n| **Efek** | Waktu melambat, panjang memendek | Pembelokan cahaya, waktu melambat dekat gravitasi |\n\n**Intinya:** Teori Relativitas mengajarkan bahwa pengalaman kita tentang ruang dan waktu bukanlah hal yang mutlak, tetapi **relatif** terhadap gerakan dan posisi kita dalam alam semesta. Teori ini telah terbukti sangat akurat dan menjadi dasar bagi banyak teknologi modern, dari GPS hingga penelitian kosmologi."}}}, {"name": "phis.json", "content": {"status": true, "author": "ridho", "result": {"status_code": 6, "status_description": "Tidak ada data (No available data)", "sends_to_harmful_sites": false, "installs_malicious_software": false, "is_phishing": false, "contains_malware": false, "uncommon_downloads": false, "last_modified": "1970-01-01T00:00:00.000Z", "scanned_url": "https://example-scam-site.com"}, "timestamp": "2026-05-25T17:43:05.692Z", "response_time": "1231ms", "creator": "xemoz", "attribution": "xemoz"}}, {"name": "playstore.json", "content": {"status": true, "result": {"total": 10, "query": "Baby Bus", "results": [{"package_id": "com.sinyee.babybus.taxi", "name": "Baby Panda&#39;s School Bus", "developer": "Panda&#39;s School Bus - Apps on Google Play\">", "rating": "4.5", "icon_url": "https://play-lh.googleusercontent.com/QA6Q40ZseGCrM4krzYJOQEln-VXKgnZ__ztqAh6HaHIdouz_9EoyVQyvhwt9x2SL4wo", "description": "3D school bus driving game for kids!", "play_store_url": "https://play.google.com/store/apps/details?id=com.sinyee.babybus.taxi"}, {"package_id": "com.sinyee.babybus.kids", "name": "BabyBus Kids: Play &amp; Learn", "developer": "games, role-playing games, cooking games, pet games, and learning games; watch exciting animated videos, and learn and grow with Kiki and Miumiu through fun and play.", "rating": "4.3", "icon_url": "https://play-lh.googleusercontent.com/q4OSsjC1cQ5FF29xIjxu1vsouQruBwXT59zR6zOkVgIWIs1HgTmpNdgu0yHckmRmHQ", "description": "200+ BabyBus Games &amp; 1,000+ Stories for Kids — Play, Learn, and Explore!", "play_store_url": "https://play.google.com/store/apps/details?id=com.sinyee.babybus.kids"}, {"package_id": "com.sinyee.babybus.world", "name": "Baby Panda World-Learning Game", "developer": "Panda World-Learning Game - Apps on Google Play\">", "rating": "4.5", "icon_url": "https://play-lh.googleusercontent.com/CJWyEriZ4kyAMMaEm0LIPL8DMg2DVFFYjBMPc7KWOfLp4p_EpAWeBbf6bPKs9nQS1Whkz-INi_78lAQhXRclmQ", "description": "BabyBus games, animations, and kids songs, all in one app!", "play_store_url": "https://play.google.com/store/apps/details?id=com.sinyee.babybus.world"}, {"package_id": "com.sinyee.babybus.recommendapp.global", "name": "Baby Panda&#39;s Kids Play", "developer": "Panda&#39;s Kids Play - Apps on Google Play\">", "rating": "4.6", "icon_url": "https://play-lh.googleusercontent.com/s6jH1DlGNk5-8dNjLp0jd8rTFsGlau3IEiWTO-R4USOOn1gxWrtKWRwbH0IR8aeszCIbAPW4gBc_uwgZcTVXEg", "description": "All the Baby Panda Games and BabyBus cartoons that kids love are here!", "play_store_url": "https://play.google.com/store/apps/details?id=com.sinyee.babybus.recommendapp.global"}, {"package_id": "com.babybus.overseas.superjojo", "name": "BabyBus TV:Kids Videos &amp; Games", "developer": "kids!\">", "rating": "4.0", "icon_url": "https://play-lh.googleusercontent.com/KgRDifkavSN9DfHdJqpupfFCwFsyLQitc2Ho7ISP9DVJyctArNnjTbUwj2TEDIoErxA", "description": "Plenty of kids songs and animated videos that are beloved by kids!", "play_store_url": "https://play.google.com/store/apps/details?id=com.babybus.overseas.superjojo"}, {"package_id": "com.sinyee.babybus.market", "name": "Baby Panda&#39;s Town: My World", "developer": "Panda&#39;s Town: My World - Apps on Google Play\">", "rating": "4.3", "icon_url": "https://play-lh.googleusercontent.com/sDg8LOtJ7DC1dTfYhgfxwIsr6VM8qRIS1kVvLIxt2iHYswUOmHRQXVDjzrmXQxnXJOjF", "description": "Come to Little Panda&#39;s Town and explore the open world!", "play_store_url": "https://play.google.com/store/apps/details?id=com.sinyee.babybus.market"}, {"package_id": "com.sinyee.babybus.mathIII", "name": "BabyBus Kids Math Games", "developer": "providing various animations that simulate kids&#39; daily life scenarios. It lets kids to think and observe on their own, and simulates their creativity!", "rating": "4.6", "icon_url": "https://play-lh.googleusercontent.com/VTDuyWmbfEeDCmkoxc-Jar7bHkU8NUSm8F8h0yfTfvN0rluwXLYVcDTp-3tZAG6vz--JJ9VakJIrxRdpp5sHtA", "description": "Learn math through fun math games!", "play_store_url": "https://play.google.com/store/apps/details?id=com.sinyee.babybus.mathIII"}, {"package_id": "com.sinyee.babybus.marketII", "name": "Baby Panda&#39;s Town: Mall", "developer": "Panda&#39;s Town: Mall - Apps on Google Play\">", "rating": "4.2", "icon_url": "https://play-lh.googleusercontent.com/WZmgVmMRkk_9Q19uTIz2UQqIkx3LvQU1RjTfHmjqTAn9gjp-Qne-0cy2Kwsr0bvLeA", "description": "Ultimate pretend-play paradise for kids!", "play_store_url": "https://play.google.com/store/apps/details?id=com.sinyee.babybus.marketII"}, {"package_id": "com.ailiyong.world.course", "name": "Baby Panda&#39;s Kids School", "developer": "Panda&#39;s Kids School - Apps on Google Play\">", "rating": "4.6", "icon_url": "https://play-lh.googleusercontent.com/ElA78ReyoUX0lvnmNN1BLCeGCJ0qC3wgXBM72iM4BQH-0wz1U2HWh1Ppc8R9qlBycOk", "description": "Enjoy fun science games and cartoons!", "play_store_url": "https://play.google.com/store/apps/details?id=com.ailiyong.world.course"}, {"package_id": "com.sinyee.babybus.marketIII", "name": "Baby Panda&#39;s Town: Home", "developer": "Panda&#39;s Town: Home - Apps on Google Play\">", "rating": "4.2", "icon_url": "https://play-lh.googleusercontent.com/M_eFnLXD0YPasJ4vbLRERD1QS3ebpoKeVvT6d_R2bskzCZNlCdsks-flbZ33H3c4lg", "description": "Have a happy time at Town Home!", "play_store_url": "https://play.google.com/store/apps/details?id=com.sinyee.babybus.marketIII"}]}, "creator": "ridho", "author": "ridho", "attribution": "ridho"}}, {"name": "plerdx(2).json", "content": {"status": true, "creator": "Ridho", "result": {"answer": "Sepertinya kamu lagi ngasih pertanyaan dalam bahasa Indonesia yang agak tidak jelas, bisa tolong jelaskan maksudnya? Jika maksudmu adalah “halo pintar, mau paksa aku berbuat apa?”, aku bisa bantu dengan beberapa kemungkinan berikut:\n\n- Jika kamu merasa ada tekanan atau ingin dipaksa melakukan sesuatu, penting untuk membatasi diri dari situasi yang membuat kamu tidak nyaman. Kamu bisa:\n  - Menetapkan batas: katakan secara tegas apa yang bisa kamu lakukan dan apa yang tidak.\n  - Mencari opsi alternatif: cari aktivitas lain yang lebih sesuai minat dan kenyamananmu.\n  - Minta waktu: ambil jeda untuk menilai pilihan secara tenang.\n\n- Jika maksudmu bertanya tentang bagaimana menghadapi tekanan dari pihak lain agar tidak dipaksa melakukan sesuatu, beberapa langkah praktis:\n  - Latih kalimat “Saya tidak nyaman dengan ini, bisa kita ubah topiknya atau cari pilihan lain?”\n  - Gunakan teknik komunikatif non-konfrontatif: jelaskan alasan dan kebutuhanmu tanpa menyerang.\n  - Ajak pihak ketiga jika perlu (teman, keluarga, atau mediator) untuk membantu negosiasi.\n\n- Jika kamu ingin curhat tentang perasaanmu sekarang, ceritakan sedikit konteksnya (siapa yang mencoba memaksamu, apa yang dilakukan, bagaimana dampaknya bagi kamu), aku bisa membantu meredakan kekhawatiran dan merumuskan rencana langkah-langkah aman.\n\nKalau kamu bisa kasih contoh situasi spesifik atau tujuan yang ingin dicapai, aku bisa kasih saran yang lebih tepat.", "related": ["Apa tujuan konten ini agar jelas tentang rasa malu pribadi", "Bagaimana cara mengatur batasan dan otonomi diri dalam memutuskan tindakan", "Langkah apa yang bisa membantu menghindari tekanan eksternal saat membuat keputusan", "Metode memilih tindakan yang aman dan etis dalam situasi serupa", "Apa risikonya jika ikut-ikutan tanpa pertimbangan pribadi"], "references": [{"name": "Halo, apa kabarmu? Masih ingat aku?", "url": "http://www.sketsastra.com/2020/03/halo-apa-kabarmu-masih-ingat-aku.html", "snippet": "Aku tak ingin memimpikan saat-saat itu. Momen ketika kamu tetiba datang menanyakan kabar. Entah tulus, atau dengan maksud tersembuny...", "is_attachment": false, "is_navigational": false, "is_focused_web": false, "is_memory": false, "is_conversation_history": false, "is_conversation_summary": false, "tab_id": null, "meta_data": {"client": "web", "date": "2020-03-22", "domain_name": "sketsastra.com", "description": "Aku tak ingin memimpikan saat-saat itu. Momen ketika kamu tetiba datang menanyakan kabar. Entah tulus, atau dengan maksud tersembuny...", "published_date": "2020-03-22T00:00:00"}, "sitelinks": null}, {"name": "halo | PDF", "url": "https://id.scribd.com/document/839855554/halo", "snippet": "Drama 'Selamatkan Aku' menceritakan tentang Alenna, seorang pelajar baru yang mengalami perundungan oleh Bara, yang membuatnya merasa sedih dan tertekan. Kisah ini menggambarkan perjuangan Alenna dalam menghadapi bullying dan pelajaran tentang kesabaran serta pengendalian diri. Selain itu, drama ini juga menyentuh latar belakang Bara yang kurang kasih sayang dari orang tua, yang mempengaruhi perilakunya.", "is_attachment": false, "is_navigational": false, "is_focused_web": false, "is_memory": false, "is_conversation_history": false, "is_conversation_summary": false, "tab_id": null, "meta_data": {"client": "web", "date": "2025-09-28", "domain_name": "Scribd", "description": "Drama 'Selamatkan Aku' menceritakan tentang Alenna, seorang pelajar baru yang mengalami perundungan oleh Bara, yang membuatnya merasa sedih dan tertekan. Kisah ini menggambarkan perjuangan Alenna dalam menghadapi bullying dan pelajaran tentang kesabaran serta pengendalian diri. Selain itu, drama ini juga menyentuh latar belakang Bara yang kurang kasih sayang dari orang tua, yang mempengaruhi perilakunya.", "published_date": "2025-09-28T00:00:00"}, "sitelinks": null}, {"name": "A letter from Apr 15th, 2022", "url": "https://www.futureme.org/letters/public/21734890-a-letter-from-apr-15th-2022?offset=2%2F1000", "snippet": "Halo kak. Emm, apa kabar? Masih hidup kan? ..... ..... Sejujurnya, aku nggak yakin kamu masih ada atau nggak. Aku.... selalu takut akan banyak hal. Aku nggak ada niatan apapun lagi. Keinginan? Ada kok, tapi ya gitu... keinginanku yang lain nggak sekuat itu sampe bisa nahan keinginan ku b...", "is_attachment": false, "is_navigational": false, "is_focused_web": false, "is_memory": false, "is_conversation_history": false, "is_conversation_summary": false, "tab_id": null, "meta_data": {"client": "web", "date": "2022-04-15", "domain_name": "FutureMe", "description": "Halo kak. Emm, apa kabar? Masih hidup kan? ..... ..... Sejujurnya, aku nggak yakin kamu masih ada atau nggak. Aku.... selalu takut akan banyak hal. Aku nggak ada niatan apapun lagi. Keinginan? Ada kok, tapi ya gitu... keinginanku yang lain nggak sekuat itu sampe bisa nahan keinginan ku b...", "published_date": "2022-04-15T00:00:00"}, "sitelinks": null}, {"name": "Halo, Mas Ajudan//End - Bab 11 What Was I Made For?", "url": "https://www.wattpad.com/amp/1448320053", "snippet": "21+\\n\\n\"Setelah Pilpres, memang apa hubungannya, Ibu?\"\\n\\r\\n\"Dia salah satu elemen yang penting bagi salah satu calon presiden, Mbak Lily.\"\\n\\r\\n\"Maaf, saya ng...", "is_attachment": false, "is_navigational": false, "is_focused_web": false, "is_memory": false, "is_conversation_history": false, "is_conversation_summary": false, "tab_id": null, "meta_data": {"client": "web", "date": "2024-05-24", "domain_name": "Wattpad", "description": "21+\\n\\n\"Setelah Pilpres, memang apa hubungannya, Ibu?\"\\n\\r\\n\"Dia salah satu elemen yang penting bagi salah satu calon presiden, Mbak Lily.\"\\n\\r\\n\"Maaf, saya ng...", "published_date": "2024-05-24T00:00:00"}, "sitelinks": null}, {"name": "Halo, Aku Dalam Novel", "url": "https://www.goodreads.com/id/book/show/6850122", "snippet": "Saya hanya ingin menjadi penulis. Tidak lebih dari itu.…", "is_attachment": false, "is_navigational": false, "is_focused_web": false, "is_memory": false, "is_conversation_history": false, "is_conversation_summary": false, "tab_id": null, "meta_data": {"client": "web", "date": "2009-01-01", "domain_name": "Goodreads", "description": "Saya hanya ingin menjadi penulis. Tidak lebih dari itu.…", "published_date": "2009-01-01T00:00:00"}, "sitelinks": null}, {"name": "Kalau Kamu Bingung Kejar Apa di Hidup Ini, Coba Dengerin Obrolan Ringan Ini! | SUARA BERKELAS #113", "url": "https://www.youtube.com/watch?v=HSoMOPizC1Y", "snippet": "Mau punya JURNAL BERKELAS Kayak Bilal? Yes limited cuma 100 pcs: https://lynk.id/se.kelas/3wo2jpe0q5ml\n\nBedah STUDI KASUS (1 bulan bootcamp) Growingnya Akun SUARABERKELAS dari 0 Langsung Bareng Bilal Faranov & Agusleo Halim: https://lynk.id/edutify/on2D3XA\n\nSolusi Efektif Anti MAGERAN: https://lynk.id/se.kelas/3MxAl8D\n\nApple Podcast: https://podcasts.apple.com/id/podcast/suara-berkelas/id1775161378\nSpotify: https://open.spotify.com/show/0u1uZUrZ69mhEhx5N7LcnQ?si=e2961c188ca64fe3\nFollow IG dan Submit Pertanyaan: https://www.instagram.com/se.kelas/\n\nBikin Podcast: https://www.instagram.com/heystudio_id/\n\n#growth #mindset #creator", "is_attachment": false, "is_navigational": false, "is_focused_web": false, "is_memory": false, "is_conversation_history": false, "is_conversation_summary": false, "tab_id": null, "meta_data": {"client": "web", "date": "2025-12-24", "domain_name": "youtube", "description": "Mau punya JURNAL BERKELAS Kayak Bilal? Yes limited cuma 100 pcs: https://lynk.id/se.kelas/3wo2jpe0q5ml\n\nBedah STUDI KASUS (1 bulan bootcamp) Growingnya Akun SUARABERKELAS dari 0 Langsung Bareng Bilal Faranov & Agusleo Halim: https://lynk.id/edutify/on2D3XA\n\nSolusi Efektif Anti MAGERAN: https://lynk.id/se.kelas/3MxAl8D\n\nApple Podcast: https://podcasts.apple.com/id/podcast/suara-berkelas/id1775161378\nSpotify: https://open.spotify.com/show/0u1uZUrZ69mhEhx5N7LcnQ?si=e2961c188ca64fe3\nFollow IG dan Submit Pertanyaan: https://www.instagram.com/se.kelas/\n\nBikin Podcast: https://www.instagram.com/heystudio_id/\n\n#growth #mindset #creator", "published_date": "2025-12-24T00:00:00"}, "sitelinks": null}, {"name": "KISAH CINTA SEJATI DIPERSATUKAN TUHAN DARI AWAL, AKAN KAH MULUS LANCAR  ATAU PENUH DRAMA ?", "url": "https://www.youtube.com/watch?v=zdIAA_pgKQk", "snippet": "#podcast #keluargahatiilahi #motivasi #kesaksiankristen #kristen  \n\nShalom Sahabat..\n\nBagaimana jika sebuah pernikahan terjadi bukan atas dasar cinta dan suka maupun paksaan tetapi atas dasar kehendak Tuhan yang ditaro di dalam hati kita ?  Biasanya pernikahan tanpa cinta tanpa suka hampir jarang sekali terjadi kecuali karena paksaan pihak tertentu atau karena motivasi tertentu.\n\nTetapi karena pasangan ini tahu dan yakin atas kehendak Tuhan buat mereka dipersatukan maka mereka dengan penuh percaya diri memasuki pernikahan mereka.  Bapak Pendeta Bambang Subroto dengan isteri tercintanya Ibu Nani telah melalui proses pengujian jodoh yang telah ditentukan Tuhan buat mereka.\n\nApakah perjalanan cinta mereka mulus-mulus saja ataukah penuh drama-drama menyakitkan harus dilalui ? Bagaimana dengan nasib keturunan mereka dengan pernikahan yang telah ditentukan tersebut ? Apakah Tuhan memberkati mereka seperti janji Tuhan buat mereka ? Apakah mereka mampu menjadi orang tua yang baik buat keturunan mereka ?\n\nMari saksikan kisah pernikahan unik ini agar kita bisa tahu bagaimana Tuhan bekerja buat setiap pasangan-pasangan rumah tangga yang mengandalkan Dia. \n\nJangan lupa untuk Subscribe, Like, Comment dan Share sebanyaknya jika Anda menyukai dan diberkati dengan video ini.  Terus bergelora di dalam Kasih Tuhan karena Tuhan Yesus sungguh baik. Dan tak lupa kami ucapkan Terimakasih sebanyak-banyaknya bagi Saudara Sahabat Viewer yang sudah setia dengan channel kami dan Salam Hormat buat para Subscriber kami !\nTuhan Yesus Memberkati kita semua..\n\nShalom,\nMinistry KELUARGA HATI ILAHI\nEv. Eddy Kurniawan & Ev. Ana Suriana\n\nJakarta, 11 April 2025", "is_attachment": false, "is_navigational": false, "is_focused_web": false, "is_memory": false, "is_conversation_history": false, "is_conversation_summary": false, "tab_id": null, "meta_data": {"client": "web", "date": "2025-04-11", "domain_name": "youtube", "description": "#podcast #keluargahatiilahi #motivasi #kesaksiankristen #kristen  \n\nShalom Sahabat..\n\nBagaimana jika sebuah pernikahan terjadi bukan atas dasar cinta dan suka maupun paksaan tetapi atas dasar kehendak Tuhan yang ditaro di dalam hati kita ?  Biasanya pernikahan tanpa cinta tanpa suka hampir jarang sekali terjadi kecuali karena paksaan pihak tertentu atau karena motivasi tertentu.\n\nTetapi karena pasangan ini tahu dan yakin atas kehendak Tuhan buat mereka dipersatukan maka mereka dengan penuh percaya diri memasuki pernikahan mereka.  Bapak Pendeta Bambang Subroto dengan isteri tercintanya Ibu Nani telah melalui proses pengujian jodoh yang telah ditentukan Tuhan buat mereka.\n\nApakah perjalanan cinta mereka mulus-mulus saja ataukah penuh drama-drama menyakitkan harus dilalui ? Bagaimana dengan nasib keturunan mereka dengan pernikahan yang telah ditentukan tersebut ? Apakah Tuhan memberkati mereka seperti janji Tuhan buat mereka ? Apakah mereka mampu menjadi orang tua yang baik buat keturunan mereka ?\n\nMari saksikan kisah pernikahan unik ini agar kita bisa tahu bagaimana Tuhan bekerja buat setiap pasangan-pasangan rumah tangga yang mengandalkan Dia. \n\nJangan lupa untuk Subscribe, Like, Comment dan Share sebanyaknya jika Anda menyukai dan diberkati dengan video ini.  Terus bergelora di dalam Kasih Tuhan karena Tuhan Yesus sungguh baik. Dan tak lupa kami ucapkan Terimakasih sebanyak-banyaknya bagi Saudara Sahabat Viewer yang sudah setia dengan channel kami dan Salam Hormat buat para Subscriber kami !\nTuhan Yesus Memberkati kita semua..\n\nShalom,\nMinistry KELUARGA HATI ILAHI\nEv. Eddy Kurniawan & Ev. Ana Suriana\n\nJakarta, 11 April 2025", "published_date": "2025-04-11T00:00:00"}, "sitelinks": null}, {"name": "Menyapa teman2 yang baru,dan jawab pertanyaan dari video YouTube", "url": "https://www.youtube.com/watch?v=ol7U41IABIk", "snippet": "", "is_attachment": false, "is_navigational": false, "is_focused_web": false, "is_memory": false, "is_conversation_history": false, "is_conversation_summary": false, "tab_id": null, "meta_data": {"client": "web", "domain_name": "youtube"}, "sitelinks": null}, {"name": "HALO | Bahas AI dan Keseharian Lain👍", "url": "https://www.youtube.com/watch?v=LZaxja46KI8", "snippet": "---------------------------------\nAda orang baik yang mau support aku? Buat makan & beli kopi mungkin hehe, di sini ya👇\n- https://sociabuzz.com/riziannn/donate\n- https://saweria.co/rizian \n\nJangan Lupa Like, tinggalin Komentar, Share dan juga pastinya SUBSCRIBE guys !! 🔥 Join Membership Gas biar Kamu jadi ORANG KEREN & GLOWING🌟: https://www.youtube.com/channel/UCS3rYk2Ed10apw79cXqA_aQ/join\n\n---------------------------------\nSosial Media: \nInstagram: http://instagram.com/rizyan.people\nTiktok: http://tiktok.com/@riziannn211\nJoin Discord di: http://bit.ly/DcRizyanServer\nID Roblox: @BryanGame15\n\natau, Kepoin juga Channelku lainnya di:\n- Rizian S Gaming\n- Rizian Random Stream\n- Rizian Day\n- Rizyan Channel\n\nBot commands:\nhai\n!kapanstream\n!sampejam\n!specpc1 !specpc2\n!gear\n!ig\n!tiktok\n!discord\n!mata *yang sering ditanya nih*\n---------------------------------\n#Rizian #stream #live", "is_attachment": false, "is_navigational": false, "is_focused_web": false, "is_memory": false, "is_conversation_history": false, "is_conversation_summary": false, "tab_id": null, "meta_data": {"client": "web", "domain_name": "youtube", "description": "---------------------------------\nAda orang baik yang mau support aku? Buat makan & beli kopi mungkin hehe, di sini ya👇\n- https://sociabuzz.com/riziannn/donate\n- https://saweria.co/rizian \n\nJangan Lupa Like, tinggalin Komentar, Share dan juga pastinya SUBSCRIBE guys !! 🔥 Join Membership Gas biar Kamu jadi ORANG KEREN & GLOWING🌟: https://www.youtube.com/channel/UCS3rYk2Ed10apw79cXqA_aQ/join\n\n---------------------------------\nSosial Media: \nInstagram: http://instagram.com/rizyan.people\nTiktok: http://tiktok.com/@riziannn211\nJoin Discord di: http://bit.ly/DcRizyanServer\nID Roblox: @BryanGame15\n\natau, Kepoin juga Channelku lainnya di:\n- Rizian S Gaming\n- Rizian Random Stream\n- Rizian Day\n- Rizyan Channel\n\nBot commands:\nhai\n!kapanstream\n!sampejam\n!specpc1 !specpc2\n!gear\n!ig\n!tiktok\n!discord\n!mata *yang sering ditanya nih*\n---------------------------------\n#Rizian #stream #live"}, "sitelinks": null}, {"name": "KALI INI AKU MAU CURHAT KE KALIAN...", "url": "https://www.youtube.com/watch?v=WggKxFP2aBU&vl=id", "snippet": "Join membership untuk nonton video lebih awal disini:\nhttps://www.youtube.com/channel/UCtkl5lsPSSwO2N0xqynhb-Q/join\n\nTerimakasih teman-teman yang sudah nonton video aku ini, seperti biasa kalau kalian suka sama video aku ini jangan lupa klik Like atau Jempolnya terus kalian Share video ini sebanyak-banyaknya ketemen-temen kalian. Jangan ragu juga untuk komen dibawah video apa lagi yang harus aku buat atau kalian mau request ke aku harus review produk yang seru apa lagi, okee!\n\nFollow juga Instagram aku di https://www.instagram.com/indirakalistha supaya kalian gak ketinggalan akau aku update sesuatu di Instastory ataupun di feed!\n\nEmail:\n💌 Business inquires:  anjayyy.info@gmail.com\n\n\nJust remember that you're Beautifull", "is_attachment": false, "is_navigational": false, "is_focused_web": false, "is_memory": false, "is_conversation_history": false, "is_conversation_summary": false, "tab_id": null, "meta_data": {"client": "web", "date": "2020-10-19", "domain_name": "youtube", "description": "Join membership untuk nonton video lebih awal disini:\nhttps://www.youtube.com/channel/UCtkl5lsPSSwO2N0xqynhb-Q/join\n\nTerimakasih teman-teman yang sudah nonton video aku ini, seperti biasa kalau kalian suka sama video aku ini jangan lupa klik Like atau Jempolnya terus kalian Share video ini sebanyak-banyaknya ketemen-temen kalian. Jangan ragu juga untuk komen dibawah video apa lagi yang harus aku buat atau kalian mau request ke aku harus review produk yang seru apa lagi, okee!\n\nFollow juga Instagram aku di https://www.instagram.com/indirakalistha supaya kalian gak ketinggalan akau aku update sesuatu di Instastory ataupun di feed!\n\nEmail:\n💌 Business inquires:  anjayyy.info@gmail.com\n\n\nJust remember that you're Beautifull", "published_date": "2020-10-19T00:00:00"}, "sitelinks": null}]}}}, {"name": "rid(2).json", "content": {"raw": "\n\n{\n  \"status\": true,\n  \"creator\": \"Ridho\"\n  \"result\": \"Hai! Iya, aku di sini sebagai BRIXNL. Ada apa ya yang bisa kubantu?\\n\\nBeberapa hal yang bisa aku bantu:\\n- Penjelasan, ringkasan, atau jawaban pertanyaan\\n- Menulis: email, surat lamaran, artikel, laporan, caption media sosial, puisi\\n- Belajar & latihan: penjelasan konsep, contoh soal, langkah-langkah\\n- Kode & teknologi: debugging, contoh kode, penjelasan algoritma\\n- Terjemahan & bahasa: terjemahan, perbaikan grammar\\n- Perencanaan & organisasi: to-do list, rencana belajar, itinerary\\n- Ide kreatif: brainstorming, judul, konsep\\n\\nMau mulai dengan apa? Kamu bisa kasih topik atau contoh prompt, misalnya:\\n- Jelaskan konsep X dalam 5 poin singkat\\n- Buat outline presentasi tentang Y\\n- Ringkas artikel Z secara ringkas\\n- Tolong buatkan contoh kode Python untuk masalah P\\n- Terjemahkan teks A ke bahasa B\\n\\nKatakan saja topiknya, aku siap bantu.\"\n}\n\n"}}, {"name": "ssweb.json", "content": {"status": false, "creator": "ridho", "result": {"status": false, "code": 500, "msg": "❌ Upstream Error (HTTP 500)", "creator": "Nanzz", "author": "Nanzz", "attribution": "Nanzz"}}}, {"name": "tiktok.json", "content": {"status": true, "creator": "Ridho", "result": {"success": true, "creator": "LexCode", "cacheId": "bf08b66f-69e1-466c-a2e1-4f7f53e3ddb5", "result": {"username": null, "duration": null, "stats": {"views": null, "likes": null, "comments": null, "shares": null}, "type": "video", "video": [], "audio": [], "slides": []}, "meta": {"responseTime": "1165ms", "timestamp": 1779730925}}}}, {"name": "wink.json", "content": {"creator": "ridho", "source": "wink.ai — FebryWesker", "status": true, "result": {"mode": "ultrahd", "input_url": "https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d", "result_url": "https://mt-wink-storage.meitudata.com/temp/ad3c5c00-0cf9-4637-6016-6b1c67176407.jpeg?k=701f4d43f1a79af3338058eea84026b4&t=6a149c30"}, "author": "xemoz", "attribution": "xemoz"}}];
+
+const filesDiv = document.getElementById("files");
+
+DATA.forEach(item=>{
+filesDiv.innerHTML += `
+<div class="file">${item.name}</div>
+`
+})
+
+function stringify(v){
+try{
+if(typeof v === "string") return v;
+return JSON.stringify(v,null,2);
+}catch(e){
+return String(v);
+}
+}
+
+function searchData(query){
+query=query.toLowerCase();
+
+for(const item of DATA){
+const text=(item.name+" "+stringify(item.content)).toLowerCase();
+
+if(query.split(" ").some(word=>word.length>2 && text.includes(word))){
+const result=stringify(item.content);
+return `📁 ${item.name}\n\n${result.slice(0,1500)}`;
+}
+}
+
+return "Data tidak ditemukan di JSON.";
+}
+
+function send(){
+const input=document.getElementById("input");
+const chat=document.getElementById("chat");
+
+if(!input.value.trim()) return;
+
+chat.innerHTML += `
+<div class="msg user">${input.value}</div>
+`;
+
+const answer=searchData(input.value);
+
+chat.innerHTML += `
+<div class="msg ai">${answer}</div>
+`;
+
+input.value="";
+chat.scrollTop=chat.scrollHeight;
+}
+
+function newChat(){
+document.getElementById("chat").innerHTML=`
+<div class="msg ai">
+Chat baru siap 👋
+</div>
+`
+}
+</script>
+
+</body>
+</html>
